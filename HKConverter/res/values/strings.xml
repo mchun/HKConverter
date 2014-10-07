@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">半斤幾兩</string>
+    <string name="title_section1">重量</string>
+    <string name="title_section2">面積</string>
+    <string name="title_section3">長度</string>
+    <string name="title_section4">速度</string>
+    <string name="title_section5">體積</string>
+
+</resources>
