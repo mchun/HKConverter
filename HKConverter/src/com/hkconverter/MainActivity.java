@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity implements
 	ViewPager mViewPager;
 
 	static String[][] Weight = { { "斤(香港)", "1.653" }, { "公斤kg", "1" },
-			{ "g", "1000" }, { "磅lbs", "2.20462262" }, { "兩", "26.45" },
+			{ "克g", "1000" }, { "磅lbs", "2.20462262" }, { "兩", "26.45" },
 			{ "安士oz", "35.2739619" }, { "斤(中國)", "2" }, { "噸", "0.001" } };
 	static String[][] Area = { { "平方米sq m", "1" },
 			{ "平方呎sq ft", "10.76391042" }, { "公頃", "0.0001" },
@@ -52,7 +52,7 @@ public class MainActivity extends ActionBarActivity implements
 			{ "標準籃球場", "0.00238" }, { "畝", "0.0015" }, { "坪(日本)", "0.3025" },
 			{ "甲(台灣)", "1.03103412723e-04" }, { "斗(田)", "0.00148367952522" } };
 	static String[][] Length = { { "呎ft", "3.2808399" }, { "米m", "1" },
-			{ "cm", "100" }, { "mm", "1000" }, { "km", "0.001" },
+			{ "厘米cm", "100" }, { "毫米mm", "1000" }, { "公里km", "0.001" },
 			{ "吋inch", "39.37007874" }, { "碼yard", "1.09361" } };
 	static String[][] Speed = { { "m/s", "1" }, { "km/h", "3.6" },
 			{ "mi/h", "2.23694" }, { "海浬knot", "1.94384449" } };
