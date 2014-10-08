@@ -43,23 +43,30 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	ViewPager mViewPager;
 
-	static String[][] Weight = { { "斤(香港)", "1.653" }, { "公斤kg", "1" },
-			{ "克g", "1000" }, { "磅lbs", "2.20462262" }, { "兩", "26.45" },
-			{ "安士oz", "35.2739619" }, { "斤(中國)", "2" }, { "噸", "0.001" } };
+	static String[][] Weight = { { "斤Catty(HK)", "1.653" }, { "公斤kg", "1" },
+			{ "克g", "1000" }, { "磅lbs", "2.20462262" }, { "兩tael", "26.45" },
+			{ "安士oz", "35.2739619" }, { "斤Catty(CN)", "2" },
+			{ "噸ton", "0.001" }, { "cup(us) 麵粉", "8" },
+			{ "cup(us) 水", "4.23728813559" },
+			{ "cup(us) 黃糖", "4.54545454545" }, { "cup(us) 白糖", "5" } };
 	static String[][] Area = { { "平方米sq m", "1" },
-			{ "平方呎sq ft", "10.76391042" }, { "公頃", "0.0001" },
-			{ "維園", "5.26315789474e-06" }, { "標準足球場", "0.0001" },
-			{ "標準籃球場", "0.00238" }, { "畝", "0.0015" }, { "坪(日本)", "0.3025" },
-			{ "甲(台灣)", "1.03103412723e-04" }, { "斗(田)", "0.00148367952522" } };
+			{ "平方呎sq ft", "10.76391042" }, { "公頃hectare", "0.0001" },
+			{ "維園Vict. Pk", "5.26315789474e-06" }, { "標準足球場", "0.0001" },
+			{ "籃球場", "0.00238" }, { "平方公里sq km", "1.0e-6" }, { "畝", "0.0015" },
+			{ "坪(日本)", "0.3025" }, { "甲(台灣)", "1.03103412723e-04" },
+			{ "斗(田)", "0.00148367952522" } };
 	static String[][] Length = { { "呎ft", "3.2808399" }, { "米m", "1" },
 			{ "厘米cm", "100" }, { "毫米mm", "1000" }, { "公里km", "0.001" },
 			{ "吋inch", "39.37007874" }, { "碼yard", "1.09361" } };
 	static String[][] Speed = { { "m/s", "1" }, { "km/h", "3.6" },
-			{ "mi/h", "2.23694" }, { "海浬knot", "1.94384449" } };
+			{ "mi/h", "2.23694" }, { "海里knot", "1.94384449" } };
 	static String[][] Volume = { { "fl oz(us)", "33.814" }, { "ml", "1000" },
 			{ "L", "1" }, { "m cube", "1" }, { "fl oz(uk)", "35.1951" },
 			{ "gallon(uk)", "0.2199688" }, { "gallon(us)", "0.2641722" },
-			{ "pint(uk)", "1.75975299" }, { "pint(us)", "2.11337642" } };
+			{ "pint(uk)", "1.75975299" }, { "pint(us)", "2.11337642" },
+			{ "cup(us)", "4.16666666667" }, { "tbsp.(us)", "67.628" },
+			{ "tbsp.(uk)", "56.3121" }, { "tsp.(us)", "202.884" },
+			{ "tsp.(uk)", "168.936" } };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -159,7 +166,7 @@ public class MainActivity extends ActionBarActivity implements
 
 		@Override
 		public int getCount() {
-			return 5;
+			return 6;
 		}
 
 		@Override
@@ -176,7 +183,8 @@ public class MainActivity extends ActionBarActivity implements
 				return getString(R.string.title_section4).toUpperCase(l);
 			case 4:
 				return getString(R.string.title_section5).toUpperCase(l);
-
+			case 5:
+				return getString(R.string.title_section6).toUpperCase(l);
 			}
 			return null;
 		}
@@ -277,6 +285,10 @@ public class MainActivity extends ActionBarActivity implements
 					spinnerArray.add(Volume[i][0]);
 				}
 				break;
+			case 6:
+				spinnerArray.add("C");
+				spinnerArray.add("F");
+				break;
 			default:
 				for (int i = 0; i < Weight.length; i++) {
 					spinnerArray.add(Weight[i][0]);
@@ -336,6 +348,8 @@ public class MainActivity extends ActionBarActivity implements
 						if (Weight[i][0].equals(toUnit))
 							mOut = Double.parseDouble(Weight[i][1]);
 					}
+					return String.format(Locale.CHINESE, "%.2f",
+							(Double.parseDouble(fromQty) * mOut / mIn));
 				case 2:
 					for (int i = 0; i < Area.length; i++) {
 						if (Area[i][0].equals(fromUnit))
@@ -343,6 +357,8 @@ public class MainActivity extends ActionBarActivity implements
 						if (Area[i][0].equals(toUnit))
 							mOut = Double.parseDouble(Area[i][1]);
 					}
+					return String.format(Locale.CHINESE, "%.2f",
+							(Double.parseDouble(fromQty) * mOut / mIn));
 				case 3:
 					for (int i = 0; i < Length.length; i++) {
 						if (Length[i][0].equals(fromUnit))
@@ -350,6 +366,8 @@ public class MainActivity extends ActionBarActivity implements
 						if (Length[i][0].equals(toUnit))
 							mOut = Double.parseDouble(Length[i][1]);
 					}
+					return String.format(Locale.CHINESE, "%.2f",
+							(Double.parseDouble(fromQty) * mOut / mIn));
 				case 4:
 					for (int i = 0; i < Speed.length; i++) {
 						if (Speed[i][0].equals(fromUnit))
@@ -357,6 +375,8 @@ public class MainActivity extends ActionBarActivity implements
 						if (Speed[i][0].equals(toUnit))
 							mOut = Double.parseDouble(Speed[i][1]);
 					}
+					return String.format(Locale.CHINESE, "%.2f",
+							(Double.parseDouble(fromQty) * mOut / mIn));
 				case 5:
 					for (int i = 0; i < Volume.length; i++) {
 						if (Volume[i][0].equals(fromUnit))
@@ -364,6 +384,16 @@ public class MainActivity extends ActionBarActivity implements
 						if (Volume[i][0].equals(toUnit))
 							mOut = Double.parseDouble(Volume[i][1]);
 					}
+					return String.format(Locale.CHINESE, "%.2f",
+							(Double.parseDouble(fromQty) * mOut / mIn));
+				case 6:
+					if (fromUnit.equals("C") && toUnit.equals("F"))
+						return String.format(Locale.CHINESE, "%.2f",
+								(Double.parseDouble(fromQty) * 9 / 5) + 32);
+					if (fromUnit.equals("F") && toUnit.equals("C"))
+						return String.format(Locale.CHINESE, "%.2f",
+								(Double.parseDouble(fromQty) - 32) * 5 / 9);
+					return fromQty;
 				default:
 					for (int i = 0; i < Weight.length; i++) {
 						if (Weight[i][0].equals(fromUnit))
@@ -371,9 +401,9 @@ public class MainActivity extends ActionBarActivity implements
 						if (Weight[i][0].equals(toUnit))
 							mOut = Double.parseDouble(Weight[i][1]);
 					}
+					return String.format(Locale.CHINESE, "%.2f",
+							(Double.parseDouble(fromQty) * mOut / mIn));
 				}
-				return String.format(Locale.CHINESE, "%.2f",
-						(Double.parseDouble(fromQty) * mOut / mIn));
 			}
 		}
 	}
