@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">半斤幾兩</string>
+    <string name="title_section0">貨幣</string>
     <string name="title_section1">重量</string>
     <string name="title_section2">面積</string>
     <string name="title_section3">長度</string>

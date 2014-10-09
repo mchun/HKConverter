@@ -67,4 +67,16 @@
             android:layout_gravity="bottom" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LinearLayoutTo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:visibility="invisible"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Edit" />
+
 </com.hkconverter.ExtendedLayout>

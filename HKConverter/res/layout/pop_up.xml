@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp" >
+
+    <EditText
+        android:id="@+id/usrInQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="0123456789."
+        android:hint="1"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/usrIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="美金" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="=" />
+
+    <EditText
+        android:id="@+id/usrOutQty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:digits="0123456789."
+        android:hint="7.8"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/usrOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="港元" />
+
+</LinearLayout>

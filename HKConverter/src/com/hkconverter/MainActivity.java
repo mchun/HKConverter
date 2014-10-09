@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,20 +17,23 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity implements
-		ActionBar.TabListener {
+		SetCurrencyDialogFragment.NoticeDialogListener, ActionBar.TabListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -43,11 +49,13 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	ViewPager mViewPager;
 
+	static SharedPreferences settings;
+
 	static String[][] Weight = { { "斤Catty(HK)", "1.653" }, { "公斤kg", "1" },
 			{ "克g", "1000" }, { "磅lbs", "2.20462262" }, { "兩tael", "26.45" },
 			{ "安士oz", "35.2739619" }, { "斤Catty(CN)", "2" },
-			{ "噸ton", "0.001" }, { "cup(us) 麵粉", "8" },
-			{ "cup(us) 水", "4.23728813559" },
+			{ "噸tonne", "0.001" }, { "stone(uk)", "0.157473044" },
+			{ "cup(us) 麵粉", "8" }, { "cup(us) 水", "4.23728813559" },
 			{ "cup(us) 黃糖", "4.54545454545" }, { "cup(us) 白糖", "5" } };
 	static String[][] Area = { { "平方米sq m", "1" },
 			{ "平方呎sq ft", "10.76391042" }, { "公頃hectare", "0.0001" },
@@ -97,16 +105,34 @@ public class MainActivity extends ActionBarActivity implements
 						actionBar.setSelectedNavigationItem(position);
 					}
 				});
-
+		settings = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
+		//if firstrun, check phonenumber entered or not and sync local db for post, comment and follow
+		if (settings.getBoolean("isFirstRun", true)) {
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putBoolean("isFirstRun", false);
+			editor.putString("userIn", "英鎊");
+			editor.putString("userInQty", "1");
+			editor.putString("userOutQty", "12.54");
+			editor.putString("userOut", "港元");
+			editor.commit();
+		}
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
 			// Create a tab with text corresponding to the page title defined by
 			// the adapter. Also specify this Activity object, which implements
 			// the TabListener interface, as the callback (listener) for when
 			// this tab is selected.
-			actionBar.addTab(actionBar.newTab()
-					.setText(mSectionsPagerAdapter.getPageTitle(i))
-					.setTabListener(this));
+			if (i == 1)
+				actionBar.addTab(
+						actionBar.newTab()
+								.setText(mSectionsPagerAdapter.getPageTitle(i))
+								.setTabListener(this), i, true);
+			else
+				actionBar.addTab(
+						actionBar.newTab()
+								.setText(mSectionsPagerAdapter.getPageTitle(i))
+								.setTabListener(this), i, false);
 		}
 	}
 
@@ -147,11 +173,34 @@ public class MainActivity extends ActionBarActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
+	@Override
+	public void onDialogPositiveClick(DialogFragment dialog) {
+		Fragment frg = mSectionsPagerAdapter.getRegisteredFragment(mViewPager
+				.getCurrentItem());
+		List<String> spinnerArray = new ArrayList<String>();
+		spinnerArray.add(settings.getString("userIn", "美金"));
+		spinnerArray.add(settings.getString("userOut", "港元"));
+		Spinner fromSpinner = (Spinner) frg.getView().findViewById(
+				R.id.spinnerFrom);
+		Spinner toSpinner = (Spinner) frg.getView()
+				.findViewById(R.id.spinnerTo);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, spinnerArray);
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		fromSpinner.setAdapter(adapter);
+		toSpinner.setAdapter(adapter);
+		toSpinner.setSelection(1, true);
+		EditText et = (EditText) frg.getView().findViewById(R.id.et_from_qty);
+		et.setText("");
+
+	}
+
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+		SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
 
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
@@ -161,12 +210,12 @@ public class MainActivity extends ActionBarActivity implements
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a PlaceholderFragment (defined as a static inner class below).
-			return PlaceholderFragment.newInstance(position + 1);
+			return PlaceholderFragment.newInstance(position);
 		}
 
 		@Override
 		public int getCount() {
-			return 6;
+			return 7;
 		}
 
 		@Override
@@ -174,19 +223,39 @@ public class MainActivity extends ActionBarActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
+				return getString(R.string.title_section0).toUpperCase(l);
 			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
+				return getString(R.string.title_section1).toUpperCase(l);
 			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
+				return getString(R.string.title_section2).toUpperCase(l);
 			case 3:
-				return getString(R.string.title_section4).toUpperCase(l);
+				return getString(R.string.title_section3).toUpperCase(l);
 			case 4:
-				return getString(R.string.title_section5).toUpperCase(l);
+				return getString(R.string.title_section4).toUpperCase(l);
 			case 5:
+				return getString(R.string.title_section5).toUpperCase(l);
+			case 6:
 				return getString(R.string.title_section6).toUpperCase(l);
 			}
 			return null;
+		}
+
+		@Override
+		public Object instantiateItem(ViewGroup container, int position) {
+			Fragment fragment = (Fragment) super.instantiateItem(container,
+					position);
+			registeredFragments.put(position, fragment);
+			return fragment;
+		}
+
+		@Override
+		public void destroyItem(ViewGroup container, int position, Object object) {
+			registeredFragments.remove(position);
+			super.destroyItem(container, position, object);
+		}
+
+		public Fragment getRegisteredFragment(int position) {
+			return registeredFragments.get(position);
 		}
 	}
 
@@ -199,7 +268,6 @@ public class MainActivity extends ActionBarActivity implements
 		 * fragment.
 		 */
 		private static final String ARG_SECTION_NUMBER = "section_number";
-		private static final String ARG_SECTION_CATEGORY = "section_category";
 		private String fromUnit;
 		private String toUnit;
 		private String fromQty = "";
@@ -258,8 +326,21 @@ public class MainActivity extends ActionBarActivity implements
 					.findViewById(R.id.spinnerFrom);
 			final Spinner toSpinner = (Spinner) rootView
 					.findViewById(R.id.spinnerTo);
-			List<String> spinnerArray = new ArrayList<String>();
+			Button editBtn = (Button) rootView.findViewById(R.id.editButton);
+			final List<String> spinnerArray = new ArrayList<String>();
 			switch (this.getArguments().getInt(ARG_SECTION_NUMBER)) {
+			case 0:
+				editBtn.setVisibility(View.VISIBLE);
+				editBtn.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View arg0) {
+						DialogFragment dialog = new SetCurrencyDialogFragment();
+						dialog.show(getFragmentManager(), "SetCurrencyDialog");
+					}
+				});
+				spinnerArray.add(settings.getString("userIn", "英鎊"));
+				spinnerArray.add(settings.getString("userOut", "港元"));
+				break;
 			case 1:
 				for (int i = 0; i < Weight.length; i++) {
 					spinnerArray.add(Weight[i][0]);
@@ -288,6 +369,7 @@ public class MainActivity extends ActionBarActivity implements
 			case 6:
 				spinnerArray.add("C");
 				spinnerArray.add("F");
+				spinnerArray.add("K");
 				break;
 			default:
 				for (int i = 0; i < Weight.length; i++) {
@@ -341,6 +423,30 @@ public class MainActivity extends ActionBarActivity implements
 				return "???";
 			else {
 				switch (this.getArguments().getInt(ARG_SECTION_NUMBER)) {
+				case 0:
+					if ((fromUnit.equals(settings.getString("userIn", "英鎊")))
+							&& (toUnit.equals(settings.getString("userOut",
+									"港元"))))
+						return String.format(
+								Locale.CHINESE,
+								"%.2f",
+								Double.parseDouble(fromQty)
+										* Double.parseDouble(settings
+												.getString("userOutQty", "10"))
+										/ Double.parseDouble(settings
+												.getString("userInQty", "1")));
+					if ((fromUnit.equals(settings.getString("userOut", "港元")))
+							&& (toUnit.equals(settings
+									.getString("userIn", "英鎊"))))
+						return String.format(
+								Locale.CHINESE,
+								"%.2f",
+								Double.parseDouble(fromQty)
+										/ Double.parseDouble(settings
+												.getString("userOutQty", "10"))
+										* Double.parseDouble(settings
+												.getString("userInQty", "1")));
+					return fromQty;
 				case 1:
 					for (int i = 0; i < Weight.length; i++) {
 						if (Weight[i][0].equals(fromUnit))
@@ -393,6 +499,22 @@ public class MainActivity extends ActionBarActivity implements
 					if (fromUnit.equals("F") && toUnit.equals("C"))
 						return String.format(Locale.CHINESE, "%.2f",
 								(Double.parseDouble(fromQty) - 32) * 5 / 9);
+					if (fromUnit.equals("K") && toUnit.equals("F"))
+						return String
+								.format(Locale.CHINESE,
+										"%.2f",
+										(Double.parseDouble(fromQty) - 273.15) * 9 / 5 + 32);
+					if (fromUnit.equals("K") && toUnit.equals("C"))
+						return String.format(Locale.CHINESE, "%.2f",
+								(Double.parseDouble(fromQty) - 273.15));
+					if (fromUnit.equals("C") && toUnit.equals("K"))
+						return String.format(Locale.CHINESE, "%.2f",
+								(Double.parseDouble(fromQty) + 273.15));
+					if (fromUnit.equals("F") && toUnit.equals("K"))
+						return String
+								.format(Locale.CHINESE,
+										"%.2f",
+										(Double.parseDouble(fromQty) - 32) * 5 / 9 + 273.15);
 					return fromQty;
 				default:
 					for (int i = 0; i < Weight.length; i++) {
@@ -407,5 +529,4 @@ public class MainActivity extends ActionBarActivity implements
 			}
 		}
 	}
-
 }
