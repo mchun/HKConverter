@@ -9,5 +9,6 @@
     <string name="title_section4">速度</string>
     <string name="title_section5">體積</string>
     <string name="title_section6">溫度</string>
+    <string name="title_section7">壓力</string>
 
 </resources>

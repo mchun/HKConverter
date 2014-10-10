@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -75,6 +76,8 @@ public class MainActivity extends ActionBarActivity implements
 			{ "cup(us)", "4.16666666667" }, { "tbsp.(us)", "67.628" },
 			{ "tbsp.(uk)", "56.3121" }, { "tsp.(us)", "202.884" },
 			{ "tsp.(uk)", "168.936" } };
+	static String[][] Pressure = { { "psi", "0.000145037738" },
+			{ "atm", "9.8692e-06" }, { "bar", "1.0e-05" }, {"kPa","0.001"},{ "Pa", "1" } };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -117,13 +120,16 @@ public class MainActivity extends ActionBarActivity implements
 			editor.putString("userOut", "港元");
 			editor.commit();
 		}
+
+		int lastTab = settings.getInt("currentTab", 1);
+
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
 			// Create a tab with text corresponding to the page title defined by
 			// the adapter. Also specify this Activity object, which implements
 			// the TabListener interface, as the callback (listener) for when
 			// this tab is selected.
-			if (i == 1)
+			if (i == lastTab)
 				actionBar.addTab(
 						actionBar.newTab()
 								.setText(mSectionsPagerAdapter.getPageTitle(i))
@@ -195,6 +201,22 @@ public class MainActivity extends ActionBarActivity implements
 
 	}
 
+	@Override
+	protected void onDestroy() {
+		Fragment frg = mSectionsPagerAdapter.getRegisteredFragment(mViewPager
+				.getCurrentItem());
+		Spinner fromSpinner = (Spinner) frg.getView().findViewById(
+				R.id.spinnerFrom);
+		Spinner toSpinner = (Spinner) frg.getView()
+				.findViewById(R.id.spinnerTo);
+		SharedPreferences.Editor editor = settings.edit();
+		editor.putInt("currentTab", mViewPager.getCurrentItem());
+		editor.putInt("spinnerInPos", fromSpinner.getSelectedItemPosition());
+		editor.putInt("spinnerOutPos", toSpinner.getSelectedItemPosition());
+		editor.commit();
+		super.onDestroy();
+	}
+
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
@@ -215,7 +237,7 @@ public class MainActivity extends ActionBarActivity implements
 
 		@Override
 		public int getCount() {
-			return 7;
+			return 8;
 		}
 
 		@Override
@@ -236,6 +258,8 @@ public class MainActivity extends ActionBarActivity implements
 				return getString(R.string.title_section5).toUpperCase(l);
 			case 6:
 				return getString(R.string.title_section6).toUpperCase(l);
+			case 7:
+				return getString(R.string.title_section7).toUpperCase(l);
 			}
 			return null;
 		}
@@ -371,6 +395,11 @@ public class MainActivity extends ActionBarActivity implements
 				spinnerArray.add("F");
 				spinnerArray.add("K");
 				break;
+			case 7:
+				for (int i = 0; i < Pressure.length; i++) {
+					spinnerArray.add(Pressure[i][0]);
+				}
+				break;
 			default:
 				for (int i = 0; i < Weight.length; i++) {
 					spinnerArray.add(Weight[i][0]);
@@ -383,7 +412,12 @@ public class MainActivity extends ActionBarActivity implements
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			fromSpinner.setAdapter(adapter);
 			toSpinner.setAdapter(adapter);
-			toSpinner.setSelection(1);
+			if (this.getArguments().getInt(ARG_SECTION_NUMBER) == settings
+					.getInt("currentTab", 1)) {
+				fromSpinner.setSelection(settings.getInt("spinnerInPos", 0));
+				toSpinner.setSelection(settings.getInt("spinnerOutPos", 0));
+			} else
+				toSpinner.setSelection(1);
 			fromSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 				@Override
@@ -516,6 +550,15 @@ public class MainActivity extends ActionBarActivity implements
 										"%.2f",
 										(Double.parseDouble(fromQty) - 32) * 5 / 9 + 273.15);
 					return fromQty;
+				case 7:
+					for (int i = 0; i < Pressure.length; i++) {
+						if (Pressure[i][0].equals(fromUnit))
+							mIn = Double.parseDouble(Pressure[i][1]);
+						if (Pressure[i][0].equals(toUnit))
+							mOut = Double.parseDouble(Pressure[i][1]);
+					}
+					return String.format(Locale.CHINESE, "%.2f",
+							(Double.parseDouble(fromQty) * mOut / mIn));
 				default:
 					for (int i = 0; i < Weight.length; i++) {
 						if (Weight[i][0].equals(fromUnit))

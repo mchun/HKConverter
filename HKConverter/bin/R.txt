@@ -358,6 +358,7 @@ int string title_section3 0x7f0a0011
 int string title_section4 0x7f0a0012
 int string title_section5 0x7f0a0013
 int string title_section6 0x7f0a0014
+int string title_section7 0x7f0a0015
 int style AppBaseTheme 0x7f0b008b
 int style AppTheme 0x7f0b008c
 int style TextAppearance_AppCompat_Base_CompactMenu_Dialog 0x7f0b0063
