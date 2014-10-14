@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.facebook.widget.ProfilePictureView
+        android:id="@+id/viewPostProfilePic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        facebook:preset_size="small" />
+
+    <TextView
+        android:id="@+id/viewPostAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/viewPostProfilePic"
+        android:clickable="true"
+        android:onClick="listAuthorPost"
+        android:text="@string/hello_world"
+        android:textAppearance="@android:style/TextAppearance.Large" />
+
+    <ImageView
+        android:id="@+id/viewPostEditBtnId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:clickable="true"
+        android:contentDescription="Edit Post Button"
+        android:onClick="editPost"
+        android:visibility="gone"
+        android:paddingTop="10dp"
+        android:src="@drawable/ic_action_edit" />
+
+    <TextView
+        android:id="@+id/viewPostDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewPostAuthor"
+        android:layout_toRightOf="@id/viewPostProfilePic"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
+    
+    <TextView
+        android:id="@+id/viewPostStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewPostDesc"
+        android:visibility="gone"
+        android:textColor="#ff0000"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
+
+    <com.freesth.CustomImgView
+        android:id="@+id/foto1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/viewPostStatus"
+        android:clickable="true"
+        android:contentDescription="Photo" />
+
+    <com.freesth.CustomImgView
+        android:id="@+id/foto2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foto1"
+        android:clickable="true"
+        android:contentDescription="Photo" />
+
+    <com.freesth.CustomImgView
+        android:id="@+id/foto3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foto2"
+        android:clickable="true"
+        android:contentDescription="Photo" />
+    
+    <TextView
+        android:id="@+id/createdTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foto3"
+        android:layout_alignParentRight="true"
+        android:textAppearance="@android:style/TextAppearance.Small" />
+
+</RelativeLayout>

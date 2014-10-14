@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.freesth"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="16" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <application
+        android:name=".FreeSthApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListPostActivity"
+            android:label="@string/title_activity_list_post"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ListAuthorPostActivity"
+            android:label="@string/title_activity_list_author_post"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ListSearchResultActivity"
+            android:label="@string/title_activity_list_search_result"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".BrowseMyPostActivity"
+            android:label="@string/title_activity_list_author_post"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".BrowseMyFavoriteActivity"
+            android:label="@string/title_activity_favorite_post"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".WritePostActivity"
+            android:label="@string/title_activity_write_post"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".EditPostActivity"
+            android:label="@string/title_activity_edit_post"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ListFollowActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".DispatchActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/Theme.AppCompat"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ViewPostActivity"
+            android:label="@string/title_activity_view_post"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name="com.parse.ui.ParseLoginActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait" >
+            <meta-data
+                android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_ENABLED"
+                android:value="true" />
+            <meta-data
+                android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_EMAIL_AS_USERNAME"
+                android:value="true" />
+            <meta-data
+                android:name="com.parse.ui.ParseLoginActivity.FACEBOOK_LOGIN_ENABLED"
+                android:value="true" />
+            <meta-data
+                android:name="com.parse.ui.ParseLoginActivity.TWITTER_LOGIN_ENABLED"
+                android:value="false" />
+        </activity>
+
+        <service android:name="com.parse.PushService" />
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".PushBroadcastReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.freesth.push" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>

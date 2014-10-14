@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
+
+    <TextView
+        android:id="@+id/foll_DetailId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:text="followed this post on DATE"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/foll_ItemDescId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foll_DetailId"
+        android:textAppearance="@android:style/TextAppearance.Medium" />
+
+    <ImageView
+        android:id="@+id/foll_coverFoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foll_ItemDescId"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:contentDescription="Photo" />
+
+</RelativeLayout>

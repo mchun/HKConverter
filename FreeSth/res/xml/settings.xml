@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="Your Personal Details" >
+        <EditTextPreference
+            android:key="prefUserName"
+            android:summary="change your name"
+            android:title="Your Name" />
+        <EditTextPreference
+            android:inputType="phone"
+            android:key="prefUserPhone"
+            android:summary="change your contact number"
+            android:title="Contact Number" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Push Notification" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_push_all"
+            android:summary="Disable all push notification"
+            android:title="Push Notification" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:dependency="pref_push_all"
+            android:key="pref_push_mypost"
+            android:summary="new comments and follows"
+            android:title="Your Posts" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:dependency="pref_push_all"
+            android:key="pref_push_favorite"
+            android:summary="new comments by the author"
+            android:title="Favorite Posts" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

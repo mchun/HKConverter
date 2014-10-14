@@ -1,0 +1,33 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.freesth.ListPostActivity" >
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/action_new"
+        android:icon="@drawable/ic_action_new"
+        android:title="@string/action_new"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/action_my_post"
+        android:title="@string/action_my_post"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/action_my_favorite"
+        android:title="@string/action_my_favorite"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never">
+    </item>
+
+</menu>

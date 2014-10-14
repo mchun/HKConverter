@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="none" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/et_itemDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/itemDesc"
+            android:inputType="textMultiLine" />
+
+        <ImageButton
+            android:id="@+id/btnPick01"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/et_itemDesc"
+            android:contentDescription="@string/add_new_photo"
+            android:onClick="addNewPhoto"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_new_picture" />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_itemDesc"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btnPick02"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/et_itemDesc"
+            android:layout_toRightOf="@id/btnPick01"
+            android:contentDescription="@string/add_new_photo"
+            android:onClick="addNewPhoto"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_new_picture"
+            android:visibility="invisible" />
+
+        <ProgressBar
+            android:id="@+id/progressBar2"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_itemDesc"
+            android:layout_toRightOf="@id/btnPick01"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/btnPick03"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/et_itemDesc"
+            android:layout_toRightOf="@id/btnPick02"
+            android:contentDescription="@string/add_new_photo"
+            android:onClick="addNewPhoto"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_new_picture"
+            android:visibility="invisible" />
+
+        <ProgressBar
+            android:id="@+id/progressBar3"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_itemDesc"
+            android:layout_toRightOf="@id/btnPick02"
+            android:visibility="gone" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnPick01"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio_free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/free" />
+
+            <RadioButton
+                android:id="@+id/radio_sale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/sale" />
+
+            <RadioButton
+                android:id="@+id/radio_wanted"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/wanted" />
+        </RadioGroup>
+
+
+        <EditText
+            android:id="@+id/et_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radioGroup1"
+            android:inputType="phone"
+            android:digits="0123456789."
+            android:visibility="gone"
+            android:hint="Enter your price" />
+
+        <TextView
+            android:id="@+id/addedTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/et_price"
+            android:text="Category:" />
+
+        <Spinner
+            android:id="@+id/spnTag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/addedTag" />
+
+        <TextView
+            android:id="@+id/postStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/spnTag"
+            android:text="Status:"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spnStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/postStatus"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/postTradeWith"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/spnStatus"
+            android:text="Traded with:"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spnTrader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/postTradeWith"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</ScrollView>

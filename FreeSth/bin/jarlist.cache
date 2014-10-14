@@ -1,0 +1,8 @@
+# cache for current jar dependency. DO NOT EDIT.
+# format is <lastModified> <length> <SHA-1> <path>
+# Encoding is UTF-8
+1409824394000 827424 2a812174191af5a4513a873602a765b0171f252c /home/alex/workspace/FreeSth/libs/Parse-1.6.0.jar
+1409824394000 827424 2a812174191af5a4513a873602a765b0171f252c /home/alex/workspace/ParseLoginUI/libs/Parse-1.6.0.jar
+1407225517000 758727 efec67655f6db90757faa37201efcee2a9ec3507 /home/alex/workspace/FreeSth/libs/android-support-v4.jar
+1412754730000 758727 efec67655f6db90757faa37201efcee2a9ec3507 /opt/adt-bundle-linux-x86-20140321/sdk/extras/android/support/v7/appcompat/libs/android-support-v4.jar
+1412754645000 758727 efec67655f6db90757faa37201efcee2a9ec3507 /home/alex/workspace/FacebookSDK/libs/android-support-v4.jar

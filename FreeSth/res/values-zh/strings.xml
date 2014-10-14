@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FreeSth</string>
+    <string name="title_activity_write_post">新 Post</string>
+    <string name="title_activity_list_post">全部 Posts</string>
+    <string name="title_activity_list_author_post">Author Posts</string>
+    <string name="title_activity_favorite_post">Favorite Posts</string>
+    <string name="title_activity_settings">設定</string>
+    <string name="title_activity_view_post">View Post</string>
+    <string name="title_activity_edit_post">編輯 Post</string>
+    <string name="title_activity_list_search_result">Search Result</string>
+    <string name="itemDesc">說明你的物件</string>
+    <string name="action_settings">設定</string>
+    <string name="action_new">新 Post</string>
+    <string name="action_search">搜尋</string>
+    <string name="action_my_post">我的 Posts</string>
+    <string name="action_my_favorite">喜愛的 Posts</string>
+    <string name="action_follow">排</string>
+    <string name="action_save">Save</string>
+    <string name="title_section1">徵</string>
+    <string name="title_section2">Free</string>
+    <string name="tab1_listAuthorPost">Posts</string>
+    <string name="tab2_listAuthorPost">Follows</string>
+    <string name="tab3_listAuthorPost">Trades</string>
+    <string name="add_new_photo">Add a new photo</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string-array name="status_array">
+        <item>Open</item>
+        <item>Closed</item>
+        <item>Completed</item>
+    </string-array>
+
+</resources>
