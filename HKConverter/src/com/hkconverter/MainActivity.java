@@ -77,7 +77,8 @@ public class MainActivity extends ActionBarActivity implements
 			{ "tbsp.(uk)", "56.3121" }, { "tsp.(us)", "202.884" },
 			{ "tsp.(uk)", "168.936" } };
 	static String[][] Pressure = { { "psi", "0.000145037738" },
-			{ "atm", "9.8692e-06" }, { "bar", "1.0e-05" }, {"kPa","0.001"},{ "Pa", "1" } };
+			{ "atm", "9.8692e-06" }, { "bar", "1.0e-05" }, { "kPa", "0.001" },
+			{ "Pa", "1" } };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -205,15 +206,17 @@ public class MainActivity extends ActionBarActivity implements
 	protected void onDestroy() {
 		Fragment frg = mSectionsPagerAdapter.getRegisteredFragment(mViewPager
 				.getCurrentItem());
-		Spinner fromSpinner = (Spinner) frg.getView().findViewById(
-				R.id.spinnerFrom);
-		Spinner toSpinner = (Spinner) frg.getView()
-				.findViewById(R.id.spinnerTo);
-		SharedPreferences.Editor editor = settings.edit();
-		editor.putInt("currentTab", mViewPager.getCurrentItem());
-		editor.putInt("spinnerInPos", fromSpinner.getSelectedItemPosition());
-		editor.putInt("spinnerOutPos", toSpinner.getSelectedItemPosition());
-		editor.commit();
+		if (frg.getView() != null) {
+			Spinner fromSpinner = (Spinner) frg.getView().findViewById(
+					R.id.spinnerFrom);
+			Spinner toSpinner = (Spinner) frg.getView().findViewById(
+					R.id.spinnerTo);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putInt("currentTab", mViewPager.getCurrentItem());
+			editor.putInt("spinnerInPos", fromSpinner.getSelectedItemPosition());
+			editor.putInt("spinnerOutPos", toSpinner.getSelectedItemPosition());
+			editor.commit();
+		}
 		super.onDestroy();
 	}
 
@@ -415,7 +418,7 @@ public class MainActivity extends ActionBarActivity implements
 			if (this.getArguments().getInt(ARG_SECTION_NUMBER) == settings
 					.getInt("currentTab", 1)) {
 				fromSpinner.setSelection(settings.getInt("spinnerInPos", 0));
-				toSpinner.setSelection(settings.getInt("spinnerOutPos", 0));
+				toSpinner.setSelection(settings.getInt("spinnerOutPos", 1));
 			} else
 				toSpinner.setSelection(1);
 			fromSpinner.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -454,6 +457,8 @@ public class MainActivity extends ActionBarActivity implements
 			if (fromQty.equals("")
 					|| (fromQty.indexOf(".") != fromQty.lastIndexOf("."))
 					|| fromQty.indexOf(".") == 0)
+				return "???";
+			else if (fromUnit == null || toUnit == null) //added in 1.41 version, sometimes crash when not using app and fromUnit is null
 				return "???";
 			else {
 				switch (this.getArguments().getInt(ARG_SECTION_NUMBER)) {
